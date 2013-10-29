@@ -73,19 +73,23 @@
             return klass;
         };
 
-        _([Backbone.Model, Backbone.Collection, Backbone.Router, Backbone.View]).each(function(klass) {
-            klass.mixin = function mixin() {
-                Cocktail.mixin(this, _.toArray(arguments));
-            }
+        _([Backbone.Model, Backbone.Collection, Backbone.Router, Backbone.View, Backbone.Layout]).each(function(klass) {
+            if (klass) {
+                klass.mixin = function mixin() {
+                    Cocktail.mixin(this, _.toArray(arguments));
+                }
 
-            klass.extend = extend;
+                klass.extend = extend;
+            }
         });
     };
 
     Cocktail.unpatch = function unpatch(Backbone) {
-        _([Backbone.Model, Backbone.Collection, Backbone.Router, Backbone.View]).each(function(klass) {
-            klass.mixin = undefined;
-            klass.extend = originalExtend;
+        _([Backbone.Model, Backbone.Collection, Backbone.Router, Backbone.View, Backbone.Layout]).each(function(klass) {
+            if (klass) {
+                klass.mixin = undefined;
+                klass.extend = originalExtend;
+            }
         });
     };
 })();
