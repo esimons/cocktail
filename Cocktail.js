@@ -42,7 +42,9 @@
 						collisions[key].push(value);
 					}
 					klass.prototype[key] = value;
-				} else if (_.isObject(value)) {
+				} else if (_.isArray(value)) {
+                    klass.prototype[key] = [].concat(value);
+                } else if (_.isObject(value)) {
 					klass.prototype[key] = _.extend({}, value, klass.prototype[key] || {});
 				} else if (!(key in klass.prototype)) {
 					klass.prototype[key] = value;
